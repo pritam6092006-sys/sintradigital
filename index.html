@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// Always open at the top, even if the URL carries a #hash from a previously clicked CTA.
+// Late-loading fonts/WebGL can shift layout and cause the browser to re-honor the hash
+// after the initial load event, so we keep re-asserting scroll-to-top for a short window.
+(function(){
+  if (location.hash) {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    var reset = function(){ window.scrollTo(0, 0); };
+    reset();
+    document.addEventListener('DOMContentLoaded', reset);
+    window.addEventListener('load', function(){
+      history.replaceState(null, '', location.pathname + location.search);
+      [0, 50, 150, 300, 600, 1000, 1500, 2500].forEach(function(delay){
+        setTimeout(reset, delay);
+      });
+    });
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sintra — High-Speed Websites, Built in 48 Hours</title>
@@ -402,7 +421,7 @@
     <h1 class="reveal in d1">High-speed websites that turn <em>local visitors</em> into paying customers.</h1>
     <p class="sub reveal in d2">We build, deploy, and host custom digital solutions. Zero technical stress.</p>
     <div class="cta-row reveal in d3">
-      <a href="#contact" class="btn btn-primary btn-lg">Let's DM →</a>
+      <a href="https://instagram.com/sintradigital" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Let's DM →</a>
     </div>
     <div class="hero-meta reveal in d3">
       <div class="stat"><div class="num">48 hrs</div><div class="lbl">Avg. Delivery</div></div>
@@ -523,7 +542,7 @@
 
     <div class="footer-links reveal">
       <a href="mailto:sintrasupport@gmail.com">sintrasupport@gmail.com</a>
-      <a href="https://instagram.com/sintra.studio" target="_blank" rel="noopener">@sintra.studio</a>
+      <a href="https://instagram.com/sintradigital" target="_blank" rel="noopener">@sintradigital</a>
     </div>
 
     <div class="signature reveal">Designed &amp; Built by <span>Sintra</span> — Websites, Manually Crafted.</div>
@@ -731,6 +750,5 @@
     }
   })();
 </script>
-
 </body>
 </html>
